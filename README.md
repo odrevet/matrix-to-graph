@@ -41,45 +41,15 @@ Order the summits so the graph is readable.
 
 * F1 File
   * Open
-
 * F2 Edit (pen icon)
-
 * F3 Display
-  * Display matrix
-
-Display the loaded matrix
-
-	* Display Path
-
-Display a list of all paths
-
-	* List Summits
-
-Display a list of all summits
-
-	* Prec dictionary
-
-Display the dictionary of summits previous to one another
-
-	* Next dictionary
-
-Display a dictionry of summits next to one another
-
-	* Matrix power
-
-Given a number, will display each element at this power
-
-      * Transitive closure
-
-Display the matrix with it's transitive closure
-
-	* Path search
-
-Search a path from one summit to another.
-User can choose the shortest or longest path
-
-* F4 Move (arrow icon)
-
-Display an arrow to move summits, this will affect the display only, not the matrix.
-
+  * Display matrix: Display the loaded matrix
+  * Display Path: Display a list of all paths
+  * List Summits: Display a list of all summits
+  * Prec dictionary: Display the dictionary of summits previous to one another
+  * Next dictionary: Display a dictionry of summits next to one another
+  * Matrix power: Given a number, will display each element at this power
+  * Transitive closure: Display the matrix with it's transitive closure
+  * Path search: Search a path from one summit to another.
+* F4 Move (arrow icon): Display an arrow to move summits, this will affect the display only
 * F5 quit
