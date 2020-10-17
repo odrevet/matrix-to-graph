@@ -13,7 +13,6 @@ void init_all(graph *p_graph, matrix *p_matrix, ESI EsiPtr)
   p_graph->v_node = calloc(p_matrix->i_size, sizeof(node));
   node_prefix(p_graph->v_node, (char *)"S", p_matrix->i_size);
 
-  //Initialisation des chemins
   p_graph->v_edge = malloc(matrix_count_edge(p_matrix) * sizeof(edge));
   set_edge(p_matrix, p_graph);
 
@@ -86,7 +85,7 @@ void ford_bellman(graph *p_graph)
   {
     for (j = 0; j < p_graph->i_nb_edge; j++)
     {
-      if (p_graph->v_edge[j].src->i_value != abs(INT_MAX)) // sourcenode is valuated
+      if (p_graph->v_edge[j].src->i_value != abs(INT_MAX)) // source node is valuated
       {
         i_tmp_valuation = p_graph->v_edge[j].src->i_value + p_graph->v_edge[j].i_weight;
         if (b_short_edge)
