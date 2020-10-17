@@ -14,16 +14,15 @@ tar -xjf tigcc_bin.tar.bz2 -C tigcc
 export TIGCC=~/tigcc
 ```
 
-# Run 
-
-    sudo apt install tiemu
-
-
 # Usage
 
 ## Send the binary to the calculator
 
 Send the binary to the calculator via the calble or to an emulator like tiemu.
+
+to install tiemu under ubuntu, run:  
+
+    sudo apt install tiemu
 
 For the TI89, the file to use is mtograph.89z
 
