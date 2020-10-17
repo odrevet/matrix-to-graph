@@ -1,11 +1,23 @@
-TI software to display a matrix as a graph and perform several operations (dictionary, closure, path search with the ford bellman algorithm)
-
-
-Written in 2007 for mathematical exams, as a helper tool, and as a project for the computer science exams; as a presentation. At the moment, the application is in french, as it was mandatory to be presented for computer science exam.
+TI software to display a matrix as a graph and perform several operations (dictionary, closure, edge search with the ford bellman algorithm). 
+Written in 2007 for mathematical exams, as a helper tool, and as a project for the computer science exams. 
 
 Binary compiled with TIGCC http://tigcc.ticalc.org/
 
 The following documentation has been created using a TI-89 titanium, some instructions may vary depending on your TI model.
+
+# Build
+
+```
+mkdir tigcc
+wget http://tigcc.ticalc.org/linux/tigcc_bin.tar.bz2
+tar -xjf tigcc_bin.tar.bz2 -C tigcc
+export TIGCC=~/tigcc
+```
+
+# Run 
+
+    sudo apt install tiemu
+
 
 # Usage
 
@@ -19,7 +31,8 @@ For the TI89, the file to use is mtograph.89z
 
 Matrix are created using the calculator's internal `Data/Matrix Editor` application.
 
-Open this application via the main APP menu, then in the dialog menu select `new`, then under type select `matrix`. Under the variable field, enter `m` as the name of the matrix.
+Open this application via the main APP menu, then in the dialog menu select `new`, then under type select `matrix`. 
+Under the variable field, enter the name of the new matrix, for example `m`.
 
 Note that the matrix must be square (same number of rows and cols). In row and Col dimension enter `4` in each field.
 
@@ -31,11 +44,7 @@ Under the `HOME` app, type `mtograph()` or use the `var-link` menu then select m
 
 the matrix can be given as an argument, `mtograph(m)`, if no arguments are provided, mtograph start by displaying an open dialog to select a matrix. We will select the previously created matrix `m`.
 
-The graph should be displayed, summits are dsplayed in a diagonal.
-
-Using the cursor menu (F4) the summits can be re-organized by placing the cursor above a summit and pushing enter, then move the cursor to the desired location and pushing enter again.
-
-Order the summits so the graph is readable.
+Using the cursor menu (F4) the nodes can be re-organized by placing the cursor above a node and pushing enter, then move the cursor to the desired location and pushing enter again.
 
 ## Menu
 
@@ -44,12 +53,12 @@ Order the summits so the graph is readable.
 * F2 Edit (pen icon)
 * F3 Display
   * Display matrix: Display the loaded matrix
-  * Display Path: Display a list of all paths
-  * List Summits: Display a list of all summits
-  * Prec dictionary: Display the dictionary of summits previous to one another
-  * Next dictionary: Display a dictionry of summits next to one another
+  * Display edge: Display a list of all edges
+  * List  nodes: Display a list of all  nodes
+  * Prec dictionary: Display the dictionary of  nodes previous to one another
+  * Next dictionary: Display a dictionry of  nodes next to one another
   * Matrix power: Given a number, will display each element at this power
   * Transitive closure: Display the matrix with it's transitive closure
-  * Path search: Search a path from one summit to another.
-* F4 Move (arrow icon): Display an arrow to move summits, this will affect the display only
+  * edge search: Search a edge from one  node to another.
+* F4 Move (arrow icon): Display an arrow to move  nodes, this will affect the display only
 * F5 quit
