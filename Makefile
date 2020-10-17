@@ -1,6 +1,7 @@
 EXEC=target
 CC=${TIGCC}/bin/tigcc
-CFLAGS= -Wall -DUSE_TI89
+CFLAGS= -Wall
+CPPFLAGS= -DUSE_TI89
 
 TARGET := mtograph
 SOURCEDIR := src
