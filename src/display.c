@@ -45,7 +45,7 @@ void edge_list(const edge *v_edge, int i_nb_edge)
                v_edge[index_edge].src->sz_name,
                v_edge[index_edge].i_weight,
                v_edge[index_edge].dest->sz_name);
-        if (i % 12 == 0)
+        if (index_edge % 12 == 0)
         {
             ngetchx();
         }
@@ -63,7 +63,7 @@ void graph_draw(const graph *p_graph)
     int i;
     float fAngle;
     point point_src, point_dest;
-    //arrow *Fleche = malloc(sizeof(arrow));
+    arrow *Fleche = malloc(sizeof(arrow));
     unsigned short icon_loop[16] = {
         0x0000, 0x0000, 0x0F80, 0x1040, 0x2020, 0x4010, 0x4010, 0x4010,
         0x40FE, 0x407C, 0x2038, 0x1010, 0x0000, 0x0000, 0x0000, 0x0000};
@@ -74,8 +74,8 @@ void graph_draw(const graph *p_graph)
 
     for (i = 0; i < p_graph->i_nb_node; i++)
     {
-        DrawStr(p_graph->v_node[i].coord.i_x - p_graph->i_ray / 2, p_graph->v_node[i].coord.i_y - p_graph->i_ray / 2, p_graph->v_node[i].sz_name, A_NORMAL); //Nom du sommet
-        DrawClipEllipse(p_graph->v_node[i].coord.i_x, p_graph->v_node[i].coord.i_y, p_graph->i_ray, p_graph->i_ray, ScrRect, A_NORMAL);                      //Cercle
+        DrawStr(p_graph->v_node[i].coord.i_x - p_graph->i_ray / 2, p_graph->v_node[i].coord.i_y - p_graph->i_ray / 2, p_graph->v_node[i].sz_name, A_NORMAL);
+        DrawClipEllipse(p_graph->v_node[i].coord.i_x, p_graph->v_node[i].coord.i_y, p_graph->i_ray, p_graph->i_ray, ScrRect, A_NORMAL);
     }
 
     for (i = 0; i < p_graph->i_nb_edge; i++)
@@ -99,7 +99,7 @@ void graph_draw(const graph *p_graph)
    Fleche.v_point[2] = set_coord(Fleche.centre.i_x-Fleche.i_height/2, Fleche.centre.i_y);
    arow_draw(rotate(fAngle, Fleche.v_point[0], Fleche.centre), rotate(fAngle, Fleche.v_point[1], Fleche.centre), rotate(fAngle, Fleche.v_point[2], Fleche.centre));
    */
-            //free(Fleche);
+            free(Fleche);
         }
     }
 }
@@ -165,7 +165,7 @@ void node_swap_coord(node *v_node, int i_nb_node)
     node_list(v_node, i_nb_node);
     printf("swap node: \n");
     scanf("%d", &i);
-    printf("\with: \n");
+    printf("\nwith: \n");
     scanf("%d", &j);
     i--;
     j--;
@@ -258,7 +258,7 @@ void menu_node_rename(node *v_node, int i_nb_node)
         node_list(v_node, i_nb_node);
         printf("Which node rename ? \n");
         scanf("%d", &i);
-        printf("\New name: \n");
+        printf("\nNew name: \n");
         scanf("%s", sz_name);
         node_rename(&v_node[i - 1], sz_name);
     }
