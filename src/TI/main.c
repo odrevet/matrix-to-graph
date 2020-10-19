@@ -67,7 +67,7 @@ void _main(void)
         exit(0);
     }
 
-    esi_to_matrix(&o_matrix, EsiPtr);
+    matrix_from_esi(&o_matrix, EsiPtr);
     graph_init(&o_graph, &o_matrix);
 
     /*sprite cursor;
@@ -102,12 +102,13 @@ void _main(void)
             else
             {
                 free_all(&o_graph, &o_matrix);
-                esi_to_matrix(&o_matrix, EsiPtr);
+                matrix_from_esi(&o_matrix, EsiPtr);
                 graph_init(&o_graph, &o_matrix);
             }
             break;
         case 21:
             graph_draw(&o_graph);
+            ngetchx();
             break;
         case 22:
             //draw_transitive_closure(p_matrix, p_graph);
@@ -119,9 +120,9 @@ void _main(void)
             //menu_node_rename(p_graph->v_node, p_matrix->i_size);
             break;
         case 26:
-            //graph_draw(p_graph);
-            //edge_display_weight(p_graph->v_edge, p_graph->i_nb_edge);
-            //ngetchx();
+            graph_draw(p_graph);
+            draw_edge_weight(p_graph->v_edge, p_graph->i_nb_edge);
+            ngetchx();
             break;
         case 31:
             clrscr();

@@ -55,13 +55,6 @@ void menu_pow(matrix *p_matrix);
 void menu_node_rename( node *v_node, int i_nb_node);
 
 /**
- @brief Display weight of edges on the screen 
- @param array of edge to display the weight
- @param number of edge in the array
-*/
-void edge_display_weight(edge *v_edge, int i_nb_edge);
-
-/**
  @brief Temporize the display
  @param Time to wait in miliseconds
 */

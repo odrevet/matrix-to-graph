@@ -108,7 +108,7 @@ void graph_draw(const graph *p_graph)
     unsigned short icon_loop[16] = {
         0x0000, 0x0000, 0x0F80, 0x1040, 0x2020, 0x4010, 0x4010, 0x4010,
         0x40FE, 0x407C, 0x2038, 0x1010, 0x0000, 0x0000, 0x0000, 0x0000};
-        
+
     clrscr();
 
     for (index = 0; index < p_graph->i_nb_node; index++)
@@ -129,6 +129,24 @@ void graph_draw(const graph *p_graph)
             point_src = ortho_projection(p_graph->v_edge[index].src->coord, -p_graph->i_ray, fAngle);
             point_dest = ortho_projection(p_graph->v_edge[index].dest->coord, p_graph->i_ray, fAngle);
             PtArrowTo(point_src, point_dest, &o_arrow);
+        }
+    }
+}
+
+void draw_edge_weight(edge *v_edge, int i_nb_edge)
+{
+    int i;
+    char szValue[5];
+    for (i = 0; i < i_nb_edge; i++)
+    {
+        sprintf(szValue, "%d", v_edge[i].i_weight);
+        if (v_edge[i].src == v_edge[i].dest)
+        {
+            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 - 26, szValue, A_NORMAL);
+        }
+        else
+        {
+            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 + 4, szValue, A_NORMAL);
         }
     }
 }

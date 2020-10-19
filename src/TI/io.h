@@ -31,6 +31,6 @@ void set_keyboard(point *v_key);
  @param The C matrix to be initialized
  @return A Stack Index pointing an `TI matrix`
 */
-void esi_to_matrix(matrix *p_matrix, ESI EsiPtr);
+void matrix_from_esi(matrix *p_matrix, ESI EsiPtr);
 
 #endif

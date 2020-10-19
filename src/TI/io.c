@@ -16,7 +16,7 @@ ESI open_file()
  }
 }
 
-void esi_to_matrix(matrix *p_matrix, ESI EsiPtr)
+void matrix_from_esi(matrix *p_matrix, ESI EsiPtr)
 {
  int i, j = 0;
  p_matrix->i_size = remaining_element_count(EsiPtr - 1);

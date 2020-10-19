@@ -1,7 +1,6 @@
 #ifndef TRIGO_H
 #define TRIGO_H
 
-#include <tigcclib.h>
 #include <math.h>
 
 #include "point.h"

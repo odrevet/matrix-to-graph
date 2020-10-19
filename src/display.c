@@ -102,24 +102,6 @@ void menu_node_rename(node *v_node, int i_nb_node)
     }
 }
 
-void edge_display_weight(edge *v_edge, int i_nb_edge)
-{
-    int i;
-    char szValue[5];
-    for (i = 0; i < i_nb_edge; i++)
-    {
-        sprintf(szValue, "%d", v_edge[i].i_weight);
-        if (v_edge[i].src == v_edge[i].dest)
-        {
-            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 - 26, szValue, A_NORMAL);
-        }
-        else
-        {
-            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 + 4, szValue, A_NORMAL);
-        }
-    }
-}
-
 void temporize(short int time)
 {
     short int randNum;
