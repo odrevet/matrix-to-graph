@@ -120,8 +120,8 @@ void _main(void)
             //menu_node_rename(p_graph->v_node, p_matrix->i_size);
             break;
         case 26:
-            graph_draw(p_graph);
-            draw_edge_weight(p_graph->v_edge, p_graph->i_nb_edge);
+            graph_draw(&o_graph);
+            draw_edge_weight(o_graph.v_edge, o_graph.i_nb_edge);
             ngetchx();
             break;
         case 31:

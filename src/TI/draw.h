@@ -2,8 +2,9 @@
 #define DRAW_H
 
 #include <math.h>
-#include <graph.h>
 
+#include <graph.h>
+#include <sprites.h>
 
 #include "../graph.h"
 #include "trigo.h"
