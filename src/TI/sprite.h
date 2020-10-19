@@ -4,7 +4,7 @@
 #include <tigcclib.h>
 
 #include "io.h"
-#include "display.h"
+#include "../display.h"
 
 /**
  @struct

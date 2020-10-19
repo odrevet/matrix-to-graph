@@ -1,12 +1,11 @@
 #include "node.h"
 
-void node_prefix(node *v_node, char szPrefi_x[5], int i_nb_node)
+void node_prefix(node *v_node, char szPrefix[5], int i_nb_node)
 {
   int i;
-  clrscr();
   for (i = 0; i < i_nb_node; i++)
   {
-    sprintf(v_node[i].sz_name, "%s%d", szPrefi_x, i + 1);
+    sprintf(v_node[i].sz_name, "%s%d", szPrefix, i + 1);
   }
 }
 
@@ -33,12 +32,11 @@ char set_level(matrix *p_matrix, node *v_node)
 
   if (has_loop(p_matrix))
   {
-    printf("Error : set_level. A matrix which have loop cannot be used to calculate levels");
+    printf("Error : set_level. A matrix which have loop cannot be used for level calculation");
     return 0;
   }
   else
   {
-    // initialisation
     matrix_copy(p_matrix, &matrix_tmp);
     for (i = 0; i < matrix_tmp.i_size; i++)
     {
@@ -46,7 +44,7 @@ char set_level(matrix *p_matrix, node *v_node)
     }
 
     for (i = 0; i < matrix_tmp.i_size; i++)
-    { //Les sommets sans precedents sont de NV 0
+    {
       if (has_prev(&matrix_tmp, i))
       {
         v_node[i].i_level = i_level;
@@ -60,7 +58,6 @@ char set_level(matrix *p_matrix, node *v_node)
         matrix_zero_at_line(&matrix_tmp, i);
       }
     }
-    //Fin init
 
     while (!all_level_checked(p_matrix, v_node))
     {
@@ -124,7 +121,7 @@ int node_level_max(node *v_node, int i_nb_node)
   }
   return i_level_max;
 }
-
+/*
 void sort_by_level(node *v_node, int i_nb_node)
 {
   int i;
@@ -149,21 +146,5 @@ void sort_by_level(node *v_node, int i_nb_node)
   }
   free(i_current_level);
 }
+*/
 
-void node_list(node *v_node, int i_nb_node)
-{
-  int i;
-  clrscr();
-  printf("Node list\n");
-  for (i = 0; i < i_nb_node; i++)
-  {
-    printf("N%d Name: %s at (%d, %d)", i + 1, v_node[i].sz_name, v_node[i].coord.i_x, v_node[i].coord.i_y);
-    printf("Level: %d\n", v_node[i].i_level);
-    printf("\n");
-    if (i % 3 == 0)
-    {
-      ngetchx();
-    }
-  }
-  ngetchx();
-}

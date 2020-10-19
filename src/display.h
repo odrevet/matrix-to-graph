@@ -3,36 +3,12 @@
 
 #include <tigcclib.h>
 
-#include "arrow.h"
-#include "trigo.h"
+#include "TI/trigo.h"
 #include "matrix.h"
 #include "edge.h"
 #include "graph.h"
+#include "print.h"
 
-/**
- @brief Display the top menu
- @return The selected menu identifier
-*/
-short menu_display();
-
-/**
- @brief Display a list of  nodes (name, location...)
- @param An array of  nodes
- @param The number of  nodes in the array
-*/
-void  node_list( node *v_node, int i_nb_node);
-
-/**
- @brief Display a list of edges (value, ...)
- @param An array of edges
- @param The number of edges in the array
-*/
-void edge_list(const edge *v_edge, int i_nb_edge);
-
-/**
- @brief
- @param
-*/
 void arrow_draw(point point1, point point2, point point3);
 
 /**
@@ -49,12 +25,6 @@ void graph_draw(const graph *p_graph);
 void line_draw(point pointSource, point pointDest);
 
 /**
- @brief Draw a matrix on screen 
- @param The matrix to be draw
-*/
-void matrix_draw(matrix *matrice);
-
-/**
  @brief Dislay the dictionnary of precedents
  @param The graph where to check
 */
@@ -65,13 +35,6 @@ void dict_prev(const graph *p_graph);
  @param The graph where to check
 */
 void dict_next(const graph *p_graph);
-
-/**
- @brief Display a menu to swap two  nodes
- @param Array of  nodes 
- @param Number of  node in the array
-*/
-void  node_swap_coord( node *v_node, int i_nb_node);
 
 /**
  @brief Do an enclosure on a matrix(see the matematic glossary for more details)

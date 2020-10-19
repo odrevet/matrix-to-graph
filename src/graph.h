@@ -1,15 +1,9 @@
-/**
- @file graph.h
- @author DREVET Olivier 
- @brief 
-*/
-
 #ifndef GRAPH_H
 #define GRAPH_H
 
 #include <stdlib.h>
 
-#include "io.h"
+//#include "io.h"
 #include "node.h"
 #include "edge.h"
 
@@ -18,25 +12,15 @@
 */
 typedef struct
 {
- edge *v_edge;
-  node *v_node;
- int i_nb_edge;
- int i_nb_node;
- int i_ray;
+    edge *v_edge;
+    node *v_node;
+    int i_nb_edge;
+    int i_nb_node;
+    int i_ray;
 } graph;
 
-/**
- @brief
- @param
- @return
-*/
-void init_all(graph *p_graph, matrix *p_matrix, ESI EsiPtr);
+void graph_init(graph *p_graph, matrix *p_matrix);
 
-/**
- @brief
- @param
- @return
-*/
 void free_all(graph *p_graph, matrix *p_matrix);
 
 /**
@@ -46,18 +30,8 @@ void free_all(graph *p_graph, matrix *p_matrix);
 */
 void ford_bellman(graph *p_graph);
 
-/**
- @brief
- @param
- @return
-*/
 void set_edge(matrix *p_matrix, graph *p_graph);
 
-/**
- @brief
- @param
- @return
-*/
-void  node_move(graph *p_graph);
+void node_move(graph *p_graph);
 
 #endif

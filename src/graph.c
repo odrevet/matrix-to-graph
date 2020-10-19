@@ -1,11 +1,8 @@
 #include "graph.h"
 
-void init_all(graph *p_graph, matrix *p_matrix, ESI EsiPtr)
+void graph_init(graph *p_graph, matrix *p_matrix)
 {
   int i;
-
-  esi_to_matrix(p_matrix, EsiPtr);
-
   p_graph->i_nb_edge = matrix_count_edge(p_matrix);
   p_graph->i_nb_node = p_matrix->i_size;
   p_graph->i_ray = 10;
@@ -16,7 +13,7 @@ void init_all(graph *p_graph, matrix *p_matrix, ESI EsiPtr)
   p_graph->v_edge = malloc(matrix_count_edge(p_matrix) * sizeof(edge));
   set_edge(p_matrix, p_graph);
 
-  if (set_level(p_matrix, p_graph->v_node))
+  /*if (set_level(p_matrix, p_graph->v_node))
   {
     sort_by_level(p_graph->v_node, p_matrix->i_size);
   }
@@ -26,18 +23,16 @@ void init_all(graph *p_graph, matrix *p_matrix, ESI EsiPtr)
     {
       p_graph->v_node[i].coord = set_coord(i * (LCD_WIDTH / p_matrix->i_size), i * (LCD_HEIGHT / p_matrix->i_size));
     }
-  }
+  }*/
 }
 
 void free_all(graph *p_graph, matrix *p_matrix)
 {
   matrix_free(p_matrix);
-  free(p_matrix);
   free(p_graph->v_node);
   free(p_graph->v_edge);
-  free(p_graph);
 }
-
+/*
 void ford_bellman(graph *p_graph)
 {
   int i_start, i_end;
@@ -113,7 +108,7 @@ void ford_bellman(graph *p_graph)
     }
     else
     {
-      printf("distance between \n%s and %s is: %d\n", p_graph->v_node[i_start].sz_name, p_graph->v_node[i].sz_name, p_graph->v_node[i].i_value);
+      printf("Distance between \n%s and %s is: %d\n", p_graph->v_node[i_start].sz_name, p_graph->v_node[i].sz_name, p_graph->v_node[i].i_value);
     }
 
     if (i % 4 == 0)
@@ -136,7 +131,7 @@ void ford_bellman(graph *p_graph)
     }
   } while (node_current != &p_graph->v_node[i_start]);
   printf("\n");
-}
+}*/
 
 void set_edge(matrix *p_matrix, graph *p_graph)
 {
@@ -149,14 +144,14 @@ void set_edge(matrix *p_matrix, graph *p_graph)
       if (p_matrix->ppi_data[i][j] != 0)
       {
         p_graph->v_edge[k].i_weight = p_matrix->ppi_data[i][j];
-        p_graph->v_edge[k].src = &p_graph->v_node[i];
-        p_graph->v_edge[k].dest = &p_graph->v_node[j];
+        p_graph->v_edge[k].src = p_graph->v_node + i;
+        p_graph->v_edge[k].dest = p_graph->v_node + j;
         k++;
       }
     }
   }
 }
-
+/*
 void node_move(graph *p_graph)
 {
   int iNumSommet;
@@ -197,3 +192,4 @@ void node_move(graph *p_graph)
   } while (Tempcoord.i_y > LCD_HEIGHT);
   p_graph->v_node[iNumSommet].coord = set_coord(Tempcoord.i_x, Tempcoord.i_y);
 }
+*/

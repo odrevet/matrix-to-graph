@@ -5,7 +5,7 @@
 #include <math.h>
 
 #include "point.h"
-#include "node.h"
+#include "../node.h"
 
 /**
  @brief get the angle between two  node

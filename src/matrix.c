@@ -204,9 +204,9 @@ char has_loop(const matrix *matrice)
 {
   int i, j;
   for (i = 0; i < matrice->i_size; i++)
-  { //Sommets d'origine
+  {
     for (j = 0; j < matrice->i_size; j++)
-    { //Sommets d'arriv�e
+    {
       if ((matrice->ppi_data[j][i] != 0) && (matrice->ppi_data[i][j] != 0))
       {
         return 1;

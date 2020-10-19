@@ -1,0 +1,20 @@
+EXEC=target
+CC=gcc
+CFLAGS= -Wall
+
+TARGET := mtograph
+SOURCEDIR := src/PC
+SOURCE := $(SOURCEDIR)/main.c src/matrix.c src/graph.c src/node.c src/print.c src/TI/point.c
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+all: $(EXEC)
+
+target: $(OBJ)
+	$(CC) $(SOURCE) -o $(TARGET) $^ $(CFLAGS) $(CPPFLAGS) -g
+
+.PHONY: clean
+
+clean:
+	rm $(TARGET)

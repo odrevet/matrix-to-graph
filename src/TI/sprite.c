@@ -94,7 +94,7 @@ void sprite_focus(sprite o_sprite, graph *p_graph, point *v_key)
                 graph_draw(p_graph);
                 sprite_draw(o_sprite);
                 bDeplacement = 0;
-                ST_helpMsg("D�placement �ffectu�. ");
+                ST_helpMsg("node moved");
             }
         }
         if (_rowread(v_key[ESC].i_y) & v_key[ESC].i_x)

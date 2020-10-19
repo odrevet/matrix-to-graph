@@ -7,9 +7,10 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <tigcclib.h>
+//#include <tigcclib.h>
+#include <string.h>
 
-#include "point.h"
+#include "TI/point.h"   //TODO remove
 #include "matrix.h"
 
 /**
@@ -21,20 +22,19 @@
 */
 typedef struct
 {
-    point coord;
+    point coord;   //TODO remove
     int i_level;
     int i_value;
     char sz_name[5];
 } node;
 
 /**
- @brief Rename all  node passed 
- @param  node to be renamed
+ @brief Rename given nodes with a prefix and an index
+ @param  nodes to be renamed
  @param The new prefix (name)
  @param The number of  nodes in the vector (the first param)
- @note this function is called 'prefix', because it rename  node with a prefix_value format, where prefix is the second param and value a sequantial number
 */
-void node_prefix(node *v_node, char szPrefi_x[5], int i_nb_node);
+void node_prefix(node *v_node, char szPrefix[5], int i_nb_node);
 
 void node_rename(node *p_node, char sz_name[5]);
 
@@ -54,7 +54,5 @@ int count_level(node *v_node, int i_level, int i_nb_node);
 void sort_by_level(node *v_node, int i_nb_node);
 
 char all_level_checked(const matrix *matrice, const node *v_node);
-
-void node_list(node *v_node, int i_nb_node);
 
 #endif

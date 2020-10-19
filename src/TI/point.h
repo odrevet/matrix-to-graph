@@ -1,8 +1,6 @@
 #ifndef POINT_H
 #define POINT_H
 
-#include <tigcclib.h>
-
 typedef struct t_point
 {
  int i_x;

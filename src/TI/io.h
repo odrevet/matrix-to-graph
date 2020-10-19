@@ -5,7 +5,7 @@
 
 #include <tigcclib.h>
 
-#include "matrix.h"
+#include "../matrix.h"
 #include "point.h"
 
 /**
