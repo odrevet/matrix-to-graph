@@ -4,37 +4,13 @@
 #include <tigcclib.h>
 
 #include "TI/trigo.h"
+#include "TI/draw.h"
 #include "matrix.h"
 #include "edge.h"
 #include "graph.h"
 #include "print.h"
 
 void arrow_draw(point point1, point point2, point point3);
-
-/**
- @brief Draw a graph on screen 
- @param The graph to draw
-*/
-void draw_graph(const graph *p_graph);
-
-/**
- @brief Draw a line
- @param The source point
- @param The destination point
-*/
-void line_draw(point pointSource, point pointDest);
-
-/**
- @brief Dislay the dictionnary of precedents
- @param The graph where to check
-*/
-void dict_prev(const graph *p_graph);
-
-/**
- @brief Dislay the dictionnary of follows
- @param The graph where to check
-*/
-void dict_next(const graph *p_graph);
 
 /**
  @brief Do an enclosure on a matrix(see the matematic glossary for more details)

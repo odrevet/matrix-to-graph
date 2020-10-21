@@ -6,6 +6,7 @@
 #include "../display.h"
 #include "io.h"
 #include "trigo.h"
+#include "draw.h"
 // #include "sprite.h"
 
 short menu_display()

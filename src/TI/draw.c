@@ -5,14 +5,6 @@ void arrow_draw(point point1, point point2, point point3)
     FillTriangle(point1.i_x, point1.i_y, point2.i_x, point2.i_y, point3.i_x, point3.i_y, ScrRect, A_NORMAL);
 }
 
-void IntArrowTo(int FromX, int FromY, int ToX, int ToY, arrow *pA)
-{
-
-    point ptFrom = {FromX, FromY};
-    point ptTo = {ToX, ToY};
-    PtArrowTo(ptFrom, ptTo, pA);
-}
-
 void PtArrowTo(point pFrom, point pTo, arrow *pA)
 {
     point pBase;
@@ -50,51 +42,10 @@ void PtArrowTo(point pFrom, point pTo, arrow *pA)
     aptPoly[2].i_x = (int)(pBase.i_x + -th * vecLeft[0]);
     aptPoly[2].i_y = (int)(pBase.i_y + -th * vecLeft[1]);
 
-    line_draw(pFrom, pBase);
-    line_draw(pFrom, aptPoly[1]);
-    line_draw(pFrom, aptPoly[0]);
-    line_draw(pFrom, aptPoly[2]);
-}
-
-void line_draw(point pointSource, point pointDest)
-{
-    short x = pointSource.i_x, y = pointSource.i_y;
-    short dx = abs(pointDest.i_x - pointSource.i_x);
-    short dy = abs(pointDest.i_y - pointSource.i_y);
-    short ystep = (pointSource.i_y < pointDest.i_y) ? 1 : -1, pystep = 30 * ystep;
-    short mov = dx ? 0 : -1;
-    unsigned char *ptr = (char *)LCD_MEM + 30 * y + (x >> 3);
-    short mask = 1 << (~x & 7);
-    if (pointSource.i_x < pointDest.i_x)
-        while (x != pointDest.i_x || y != pointDest.i_y)
-        {
-            *ptr |= mask;
-            if (mov < 0)
-                y += ystep, ptr += pystep, mov += dx;
-            else
-            {
-                mov -= dy;
-                if (++x & 7)
-                    mask >>= 1;
-                else
-                    ptr++, mask = 0x80;
-            }
-        }
-    else
-        while (x != pointDest.i_x || y != pointDest.i_y)
-        {
-            *ptr |= mask;
-            if (mov < 0)
-                y += ystep, ptr += pystep, mov += dx;
-            else
-            {
-                mov -= dy;
-                if (x-- & 7)
-                    mask <<= 1;
-                else
-                    ptr--, mask = 1;
-            }
-        }
+    DrawLine(pFrom.i_x, pFrom.i_y, pBase.i_x, aptPoly[2].i_y, A_NORMAL);
+    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[1].i_x, aptPoly[2].i_y,A_NORMAL);
+    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[0].i_x, aptPoly[2].i_y, A_NORMAL);
+    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[2].i_x, aptPoly[2].i_y, A_NORMAL);
 }
 
 void draw_graph(const graph *p_graph)
@@ -102,7 +53,7 @@ void draw_graph(const graph *p_graph)
     int index;
     float fAngle;
     point point_src, point_dest;
-    arrow o_arrow = {.nWidth = 5, .fTheta = 0.25};
+    //arrow o_arrow = {.nWidth = 5, .fTheta = 0.25};
     unsigned short icon_loop[16] = {
         0x0000, 0x0000, 0x0F80, 0x1040, 0x2020, 0x4010, 0x4010, 0x4010,
         0x40FE, 0x407C, 0x2038, 0x1010, 0x0000, 0x0000, 0x0000, 0x0000};
@@ -126,7 +77,8 @@ void draw_graph(const graph *p_graph)
             fAngle = get_angle(p_graph->v_edge[index].src, p_graph->v_edge[index].dest);
             point_src = ortho_projection(p_graph->v_edge[index].src->coord, -p_graph->i_ray, fAngle);
             point_dest = ortho_projection(p_graph->v_edge[index].dest->coord, p_graph->i_ray, fAngle);
-            PtArrowTo(point_src, point_dest, &o_arrow);
+            //PtArrowTo(point_src, point_dest, &o_arrow);
+            DrawLine(point_src.i_x, point_src.i_y, point_dest.i_x, point_dest.i_y, A_NORMAL);
         }
     }
 }
