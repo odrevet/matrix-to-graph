@@ -40,7 +40,7 @@ void draw_transitive_closure(matrix *p_matrix, graph *p_graph)
 
     graph_tmp.v_edge = malloc(matrix_count_edge(&matrix_tmp) * sizeof(edge));
     set_edge(&matrix_tmp, &graph_tmp);
-    graph_draw(&graph_tmp);
+    draw_graph(&graph_tmp);
     ST_helpMsg("transitive closure drawing ");
     ngetchx();
     matrix_free(&matrix_tmp);

@@ -15,7 +15,7 @@ void arrow_draw(point point1, point point2, point point3);
  @brief Draw a graph on screen 
  @param The graph to draw
 */
-void graph_draw(const graph *p_graph);
+void draw_graph(const graph *p_graph);
 
 /**
  @brief Draw a line

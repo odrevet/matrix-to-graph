@@ -5,8 +5,6 @@ void arrow_draw(point point1, point point2, point point3)
     FillTriangle(point1.i_x, point1.i_y, point2.i_x, point2.i_y, point3.i_x, point3.i_y, ScrRect, A_NORMAL);
 }
 
-// ArrowTo()
-//
 void IntArrowTo(int FromX, int FromY, int ToX, int ToY, arrow *pA)
 {
 
@@ -99,7 +97,7 @@ void line_draw(point pointSource, point pointDest)
         }
 }
 
-void graph_draw(const graph *p_graph)
+void draw_graph(const graph *p_graph)
 {
     int index;
     float fAngle;

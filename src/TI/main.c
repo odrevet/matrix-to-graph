@@ -48,7 +48,7 @@ void _main(void)
     graph o_graph;
     matrix o_matrix;
 
-    point v_key[8];
+    //point v_key[8];
 
     ESI EsiPtr = top_estack;
     FontSetSys(F_6x8);
@@ -70,6 +70,13 @@ void _main(void)
     matrix_from_esi(&o_matrix, EsiPtr);
     graph_init(&o_graph, &o_matrix);
 
+    // initialize drawing coordinates
+    int index_node;
+    for (index_node = 0; index_node < o_matrix.i_size; index_node++)
+    {
+        o_graph.v_node[index_node].coord = set_coord(index_node * (LCD_WIDTH / o_matrix.i_size), index_node * (LCD_HEIGHT / o_matrix.i_size));
+    }
+
     /*sprite cursor;
     unsigned char sprite[12] = {
         0x40, 0x60, 0x70, 0x78, 0x7C, 0x7E, 0x7F, 0x7C,
@@ -84,8 +91,6 @@ void _main(void)
     set_keyboard(v_key);
     INT_HANDLER interrupt1 = GetIntVec(AUTO_INT_1); // save auto-interrupt 1 (bottom text)
     */
-
-    //graph_draw(p_graph);
 
     do
     {
@@ -107,7 +112,7 @@ void _main(void)
             }
             break;
         case 21:
-            graph_draw(&o_graph);
+            draw_graph(&o_graph);
             ngetchx();
             break;
         case 22:
@@ -120,7 +125,7 @@ void _main(void)
             //menu_node_rename(p_graph->v_node, p_matrix->i_size);
             break;
         case 26:
-            graph_draw(&o_graph);
+            draw_graph(&o_graph);
             draw_edge_weight(o_graph.v_edge, o_graph.i_nb_edge);
             ngetchx();
             break;

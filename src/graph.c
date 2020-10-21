@@ -2,7 +2,6 @@
 
 void graph_init(graph *p_graph, matrix *p_matrix)
 {
-  int i;
   p_graph->i_nb_edge = matrix_count_edge(p_matrix);
   p_graph->i_nb_node = p_matrix->i_size;
   p_graph->i_ray = 10;
@@ -12,18 +11,7 @@ void graph_init(graph *p_graph, matrix *p_matrix)
 
   p_graph->v_edge = malloc(matrix_count_edge(p_matrix) * sizeof(edge));
   set_edge(p_matrix, p_graph);
-
-  /*if (set_level(p_matrix, p_graph->v_node))
-  {
-    sort_by_level(p_graph->v_node, p_matrix->i_size);
-  }
-  else
-  {
-    for (i = 0; i < p_matrix->i_size; i++)
-    {
-      p_graph->v_node[i].coord = set_coord(i * (LCD_WIDTH / p_matrix->i_size), i * (LCD_HEIGHT / p_matrix->i_size));
-    }
-  }*/
+  set_level(p_matrix, p_graph->v_node);
 }
 
 void free_all(graph *p_graph, matrix *p_matrix)

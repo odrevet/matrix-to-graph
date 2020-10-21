@@ -46,14 +46,14 @@ void sprite_focus(sprite o_sprite, graph *p_graph, point *v_key)
         if (_rowread(v_key[LESS].i_y) & v_key[LESS].i_x)
         {
             p_graph->i_ray--;
-            graph_draw(p_graph);
+            draw_graph(p_graph);
             sprite_draw(o_sprite);
             ST_helpMsg("Deszoom");
         }
         if (_rowread(v_key[PLUS].i_y) & v_key[PLUS].i_x)
         {
             p_graph->i_ray++;
-            graph_draw(p_graph);
+            draw_graph(p_graph);
             sprite_draw(o_sprite);
             ST_helpMsg("Zoom");
         }
@@ -91,7 +91,7 @@ void sprite_focus(sprite o_sprite, graph *p_graph, point *v_key)
             else
             {
                 p_graph->v_node[i].coord = set_coord(o_sprite.coord.i_x, o_sprite.coord.i_y);
-                graph_draw(p_graph);
+                draw_graph(p_graph);
                 sprite_draw(o_sprite);
                 bDeplacement = 0;
                 ST_helpMsg("node moved");

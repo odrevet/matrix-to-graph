@@ -35,6 +35,6 @@ void IntArrowTo(int FromX, int FromY, int ToX, int ToY, arrow *pA);
 void PtArrowTo(point pFrom, point pTo, arrow *pArrow);
 void arrow_draw(point point1, point point2, point point3);
 void line_draw(point pointSource, point pointDest);
-void graph_draw(const graph *p_graph);
+void draw_graph(const graph *p_graph);
 void draw_edge_weight(edge *v_edge, int i_nb_edge);
 #endif

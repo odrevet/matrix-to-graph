@@ -121,30 +121,4 @@ int node_level_max(node *v_node, int i_nb_node)
   }
   return i_level_max;
 }
-/*
-void sort_by_level(node *v_node, int i_nb_node)
-{
-  int i;
-  int i_shift;
-
-  // store the index for each level
-  int *i_current_level = calloc(node_level_max(v_node, i_nb_node) + 1, sizeof(int));
-  i_shift = LCD_WIDTH / (node_level_max(v_node, i_nb_node) + 2);
-
-  // horizontal
-  for (i = 0; i < i_nb_node; i++)
-  {
-    v_node[i].coord.i_x = i_shift + i_shift * v_node[i].i_level;
-  }
-
-  // vertical
-  for (i = 0; i < i_nb_node; i++)
-  {
-    i_shift = LCD_HEIGHT / (count_level(v_node, v_node[i].i_level, i_nb_node) + 1);
-    v_node[i].coord.i_y = i_shift + i_shift * (i_current_level[v_node[i].i_level]);
-    i_current_level[v_node[i].i_level]++;
-  }
-  free(i_current_level);
-}
-*/
 
