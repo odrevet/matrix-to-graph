@@ -1,51 +1,40 @@
 #include "draw.h"
 
-void arrow_draw(point point1, point point2, point point3)
+void draw_arrow(point o_point_from, point o_point_to)
 {
-    FillTriangle(point1.i_x, point1.i_y, point2.i_x, point2.i_y, point3.i_x, point3.i_y, ScrRect, A_NORMAL);
-}
-
-void PtArrowTo(point pFrom, point pTo, arrow *pA)
-{
-    point pBase;
+    arrow o_arrow = {.width = 5, .theta = 0.7};
     point aptPoly[3];
     float vecLine[2];
     float vecLeft[2];
-    float fLength;
-    float th;
-    float ta;
 
     // set to point
-    aptPoly[0].i_x = pTo.i_x;
-    aptPoly[0].i_y = pTo.i_y;
+    aptPoly[0].x = o_point_to.x;
+    aptPoly[0].y = o_point_to.y;
 
     // build the line vector
-    vecLine[0] = (float)aptPoly[0].i_x - pFrom.i_x;
-    vecLine[1] = (float)aptPoly[0].i_y - pFrom.i_y;
+    vecLine[0] = (float)aptPoly[0].x - o_point_from.x;
+    vecLine[1] = (float)aptPoly[0].y - o_point_from.y;
 
     // build the arrow base vector - normal to the line
     vecLeft[0] = -vecLine[1];
     vecLeft[1] = vecLine[0];
 
     // setup length parameters
-    fLength = (float)sqrt(vecLine[0] * vecLine[0] + vecLine[1] * vecLine[1]);
-    th = pA->nWidth / (2.0f * fLength);
-    ta = pA->nWidth / (2.0f * (tan(pA->fTheta) / 2.0f) * fLength);
+    float fLength = (float)sqrt(vecLine[0] * vecLine[0] + vecLine[1] * vecLine[1]);
+    float th = o_arrow.width / (2.0f * fLength);
+    float ta = o_arrow.width / (2.0f * (tan(o_arrow.theta) / 2.0f) * fLength);
 
-    // find the base of the arrow
-    pBase.i_x = (int)(aptPoly[0].i_x + -ta * vecLine[0]);
-    pBase.i_y = (int)(aptPoly[0].i_y + -ta * vecLine[1]);
+    // base of the arrow
+    point o_point_base = {.x = (int)(aptPoly[0].x + -ta * vecLine[0]),
+                          .y = (int)(aptPoly[0].y + -ta * vecLine[1])};
 
     // build the points on the sides of the arrow
-    aptPoly[1].i_x = (int)(pBase.i_x + th * vecLeft[0]);
-    aptPoly[1].i_y = (int)(pBase.i_y + th * vecLeft[1]);
-    aptPoly[2].i_x = (int)(pBase.i_x + -th * vecLeft[0]);
-    aptPoly[2].i_y = (int)(pBase.i_y + -th * vecLeft[1]);
+    aptPoly[1].x = (int)(o_point_base.x + th * vecLeft[0]);
+    aptPoly[1].y = (int)(o_point_base.y + th * vecLeft[1]);
+    aptPoly[2].x = (int)(o_point_base.x + -th * vecLeft[0]);
+    aptPoly[2].y = (int)(o_point_base.y + -th * vecLeft[1]);
 
-    DrawLine(pFrom.i_x, pFrom.i_y, pBase.i_x, aptPoly[2].i_y, A_NORMAL);
-    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[1].i_x, aptPoly[2].i_y,A_NORMAL);
-    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[0].i_x, aptPoly[2].i_y, A_NORMAL);
-    DrawLine(pFrom.i_x, pFrom.i_y, aptPoly[2].i_x, aptPoly[2].i_y, A_NORMAL);
+    FillTriangle(aptPoly[0].x, aptPoly[0].y, aptPoly[1].x, aptPoly[1].y, aptPoly[2].x, aptPoly[2].y, ScrRect, A_NORMAL);
 }
 
 void draw_graph(const graph *p_graph)
@@ -53,7 +42,6 @@ void draw_graph(const graph *p_graph)
     int index;
     float fAngle;
     point point_src, point_dest;
-    //arrow o_arrow = {.nWidth = 5, .fTheta = 0.25};
     unsigned short icon_loop[16] = {
         0x0000, 0x0000, 0x0F80, 0x1040, 0x2020, 0x4010, 0x4010, 0x4010,
         0x40FE, 0x407C, 0x2038, 0x1010, 0x0000, 0x0000, 0x0000, 0x0000};
@@ -62,23 +50,23 @@ void draw_graph(const graph *p_graph)
 
     for (index = 0; index < p_graph->i_nb_node; index++)
     {
-        DrawStr(p_graph->v_node[index].coord.i_x - p_graph->i_ray / 2, p_graph->v_node[index].coord.i_y - p_graph->i_ray / 2, p_graph->v_node[index].sz_name, A_NORMAL);
-        DrawClipEllipse(p_graph->v_node[index].coord.i_x, p_graph->v_node[index].coord.i_y, p_graph->i_ray, p_graph->i_ray, ScrRect, A_NORMAL);
+        DrawStr(p_graph->v_node[index].coord.x - p_graph->i_ray / 2, p_graph->v_node[index].coord.y - p_graph->i_ray / 2, p_graph->v_node[index].sz_name, A_NORMAL);
+        DrawClipEllipse(p_graph->v_node[index].coord.x, p_graph->v_node[index].coord.y, p_graph->i_ray, p_graph->i_ray, ScrRect, A_NORMAL);
     }
 
     for (index = 0; index < p_graph->i_nb_edge; index++)
     {
         if (p_graph->v_edge[index].src == p_graph->v_edge[index].dest)
         {
-            Sprite16(p_graph->v_edge[index].src->coord.i_x, p_graph->v_edge[index].dest->coord.i_y - p_graph->i_ray * 2, 16, icon_loop, LCD_MEM, SPRT_XOR);
+            Sprite16(p_graph->v_edge[index].src->coord.x, p_graph->v_edge[index].dest->coord.y - p_graph->i_ray * 2, 16, icon_loop, LCD_MEM, SPRT_XOR);
         }
         else
         {
             fAngle = get_angle(p_graph->v_edge[index].src, p_graph->v_edge[index].dest);
             point_src = ortho_projection(p_graph->v_edge[index].src->coord, -p_graph->i_ray, fAngle);
             point_dest = ortho_projection(p_graph->v_edge[index].dest->coord, p_graph->i_ray, fAngle);
-            //PtArrowTo(point_src, point_dest, &o_arrow);
-            DrawLine(point_src.i_x, point_src.i_y, point_dest.i_x, point_dest.i_y, A_NORMAL);
+            DrawLine(point_src.x, point_src.y, point_dest.x, point_dest.y, A_NORMAL);
+            draw_arrow(point_src, point_dest);
         }
     }
 }
@@ -92,11 +80,11 @@ void draw_edge_weight(edge *v_edge, int i_nb_edge)
         sprintf(szValue, "%d", v_edge[i].i_weight);
         if (v_edge[i].src == v_edge[i].dest)
         {
-            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 - 26, szValue, A_NORMAL);
+            DrawStr((v_edge[i].src->coord.x + v_edge[i].dest->coord.x) / 2, (v_edge[i].src->coord.y + v_edge[i].dest->coord.y) / 2 - 26, szValue, A_NORMAL);
         }
         else
         {
-            DrawStr((v_edge[i].src->coord.i_x + v_edge[i].dest->coord.i_x) / 2, (v_edge[i].src->coord.i_y + v_edge[i].dest->coord.i_y) / 2 + 4, szValue, A_NORMAL);
+            DrawStr((v_edge[i].src->coord.x + v_edge[i].dest->coord.x) / 2, (v_edge[i].src->coord.y + v_edge[i].dest->coord.y) / 2 + 4, szValue, A_NORMAL);
         }
     }
 }

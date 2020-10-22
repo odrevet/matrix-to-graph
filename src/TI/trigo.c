@@ -1,46 +1,30 @@
 #include "trigo.h"
 
-float get_angle(const node *UnSommetA, const node *UnSommetB)
+float get_angle(const node *p_node_a, const node *p_node_b)
 {
-    float angle;
-    angle = atan2(UnSommetA->coord.i_y - UnSommetB->coord.i_y, UnSommetA->coord.i_x - UnSommetB->coord.i_x);
-    return angle;
+    return atan2(p_node_a->coord.y - p_node_b->coord.y, p_node_a->coord.x - p_node_b->coord.x);
 }
 
-float degree_to_radian(float angle)
+int rotate_x(float angle, point o_point, point center)
 {
-    angle = (PI * angle) / 180;
-    return angle;
+    return (int)(cos(angle) * (o_point.x - center.x) - sin(angle) * (o_point.y - center.y) + center.x);
 }
 
-float radian_to_degree(float angle)
+int rotate_y(float angle, point o_point, point center)
 {
-    angle = angle * (180 / PI);
-    return angle;
+    return (int)(sin(angle) * (o_point.x - center.x) + cos(angle) * (o_point.y - center.y) + center.y);
 }
 
-int rotate_x(float angle, point Unpoint, point pointCentral)
+point rotate(float angle, point o_point, point center)
 {
-    return (int)(cos(angle) * (Unpoint.i_x - pointCentral.i_x) - sin(angle) * (Unpoint.i_y - pointCentral.i_y) + pointCentral.i_x);
+    point point_res = {.x = rotate_x(angle, o_point, center),
+                       .y = rotate_y(angle, o_point, center)};
+    return point_res;
 }
 
-int rotate_y(float angle, point Unpoint, point pointCentral)
+point ortho_projection(point o_point, int iShift, float fAngle)
 {
-    return (int)(sin(angle) * (Unpoint.i_x - pointCentral.i_x) + cos(angle) * (Unpoint.i_y - pointCentral.i_y) + pointCentral.i_y);
-}
-
-point rotate(float angle, point Unpoint, point pointCentral)
-{
-    point pointTourne;
-    pointTourne.i_x = rotate_x(angle, Unpoint, pointCentral);
-    pointTourne.i_y = rotate_y(angle, Unpoint, pointCentral);
-    return pointTourne;
-}
-
-point ortho_projection(point Unpoint, int iDecalage, float fAngle)
-{
-    point pointChasles;
-    pointChasles.i_x = (Unpoint.i_x + iDecalage * cos(fAngle));
-    pointChasles.i_y = (Unpoint.i_y + iDecalage * sin(fAngle));
-    return pointChasles;
+    point point_res = {.x = o_point.x + iShift * cos(fAngle),
+                       .y = o_point.y + iShift * sin(fAngle)};
+    return point_res;
 }

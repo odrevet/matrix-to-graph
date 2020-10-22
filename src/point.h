@@ -3,8 +3,8 @@
 
 typedef struct t_point
 {
- int i_x;
- int i_y;
+ int x;
+ int y;
 } point;
 
 /**

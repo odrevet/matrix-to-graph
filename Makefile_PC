@@ -4,7 +4,7 @@ CFLAGS= -Wall
 
 TARGET := mtograph
 SOURCEDIR := src/PC
-SOURCE := $(SOURCEDIR)/main.c src/matrix.c src/graph.c src/node.c src/print.c src/TI/point.c
+SOURCE := $(SOURCEDIR)/main.c src/matrix.c src/graph.c src/node.c src/print.c src/point.c
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)

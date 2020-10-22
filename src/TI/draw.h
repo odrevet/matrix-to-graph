@@ -7,32 +7,21 @@
 #include <sprites.h>
 
 #include "../graph.h"
+#include "../point.h"
 #include "trigo.h"
-#include "point.h"
-
-typedef struct
-{
-    point v_point[3];
-    point centre;
-    int i_base;
-    int i_height;
-} Triangle;
 
 /**
  @struct An arrow 
  @param Width of the full base of the arrowhead in pixels
  @param The angle at the arrow tip between the two sides of the arrowhead in radian
- @param Flag indicating whether or not the arrowhead should be filled (1) or not (0)
 */
 typedef struct t_arrow
 {
-    int nWidth;
-    float fTheta;
-    char bFill;
+    int width;
+    float theta;
 } arrow;
 
-void PtArrowTo(point pFrom, point pTo, arrow *pArrow);
-void arrow_draw(point point1, point point2, point point3);
+void draw_arrow(point o_point_from, point o_point_to);
 void line_draw(point pointSource, point pointDest);
 void draw_graph(const graph *p_graph);
 void draw_edge_weight(edge *v_edge, int i_nb_edge);

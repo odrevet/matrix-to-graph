@@ -158,26 +158,26 @@ void node_move(graph *p_graph)
   do
   {
     printf("coord x (max %d)\n", LCD_WIDTH - p_graph->i_ray);
-    scanf("%d", &Tempcoord.i_x);
+    scanf("%d", &Tempcoord.x);
 
-    if ((Tempcoord.i_x > LCD_WIDTH - p_graph->i_ray) || (Tempcoord.i_x < 0))
+    if ((Tempcoord.x > LCD_WIDTH - p_graph->i_ray) || (Tempcoord.x < 0))
     {
       printf("\ncoord x overflow \n");
     }
 
-  } while (Tempcoord.i_x > LCD_WIDTH);
+  } while (Tempcoord.x > LCD_WIDTH);
 
   do
   {
     printf("\ncoords y: (max: %d)\n", LCD_HEIGHT - p_graph->i_ray);
-    scanf("%d", &Tempcoord.i_y);
+    scanf("%d", &Tempcoord.y);
 
-    if ((Tempcoord.i_y > LCD_HEIGHT - p_graph->i_ray) || (Tempcoord.i_y < 0))
+    if ((Tempcoord.y > LCD_HEIGHT - p_graph->i_ray) || (Tempcoord.y < 0))
     {
       printf("\ncoord y overflow\n");
     }
 
-  } while (Tempcoord.i_y > LCD_HEIGHT);
-  p_graph->v_node[iNumSommet].coord = set_coord(Tempcoord.i_x, Tempcoord.i_y);
+  } while (Tempcoord.y > LCD_HEIGHT);
+  p_graph->v_node[iNumSommet].coord = set_coord(Tempcoord.x, Tempcoord.y);
 }
 */

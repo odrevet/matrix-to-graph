@@ -7,6 +7,7 @@ TARGET := mtograph
 SOURCEDIR := src
 SOURCE := $(foreach DIR,$(SOURCEDIR)/TI,$(wildcard $(DIR)/*.c)) \
 $(SOURCEDIR)/display.c \
+$(SOURCEDIR)/point.c \
 $(SOURCEDIR)/print.c \
 $(SOURCEDIR)/graph.c \
 $(SOURCEDIR)/matrix.c \

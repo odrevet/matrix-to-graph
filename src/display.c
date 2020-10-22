@@ -35,7 +35,7 @@ void draw_transitive_closure(matrix *p_matrix, graph *p_graph)
     for (i = 0; i < matrix_tmp.i_size; i++)
     {
         strcpy(graph_tmp.v_node[i].sz_name, p_graph->v_node[i].sz_name);
-        graph_tmp.v_node[i].coord = set_coord(p_graph->v_node[i].coord.i_x, p_graph->v_node[i].coord.i_y);
+        graph_tmp.v_node[i].coord = set_coord(p_graph->v_node[i].coord.x, p_graph->v_node[i].coord.y);
     }
 
     graph_tmp.v_edge = malloc(matrix_count_edge(&matrix_tmp) * sizeof(edge));

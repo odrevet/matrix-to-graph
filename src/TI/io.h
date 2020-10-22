@@ -6,7 +6,7 @@
 #include <tigcclib.h>
 
 #include "../matrix.h"
-#include "point.h"
+#include "../point.h"
 
 /**
  @enum An enumeration of keys

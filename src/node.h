@@ -10,7 +10,7 @@
 //#include <tigcclib.h>
 #include <string.h>
 
-#include "TI/point.h"   //TODO remove
+#include "point.h"
 #include "matrix.h"
 
 /**

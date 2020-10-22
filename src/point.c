@@ -3,7 +3,7 @@
 point set_coord(int x, int y)
 {
  point temp;
- temp.i_x = x;
- temp.i_y = y;
+ temp.x = x;
+ temp.y = y;
  return temp;
 }
