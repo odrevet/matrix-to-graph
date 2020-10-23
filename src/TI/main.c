@@ -53,7 +53,6 @@ void matrix_from_esi(matrix *p_matrix, ESI EsiPtr)
     EsiPtr--; // END_TAG
 }
 
-// TODO move in another source file for PC version
 void menu_matrix_closure(matrix *p_matrix)
 {
     matrix MatriceTemp;
@@ -69,7 +68,6 @@ void menu_matrix_closure(matrix *p_matrix)
     ngetchx();
 }
 
-// TODO move in another source file for PC version
 void menu_node_rename(node *v_node, int i_nb_node)
 {
     short int i_choice;
@@ -108,7 +106,6 @@ void menu_node_rename(node *v_node, int i_nb_node)
     }
 }
 
-// TODO move in another source file for PC version
 void menu_pow(matrix *p_matrix)
 {
     int ipower;
