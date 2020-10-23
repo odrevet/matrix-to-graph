@@ -1,0 +1,32 @@
+#ifndef MENU_H
+#define MENU_U
+
+#include <tigcclib.h>
+
+#define MENU_ROOT 0 
+
+#define MENU_FILE 1
+#define MENU_FILE_LOAD_MATRIX 11
+
+#define MENU_DRAW 2
+#define MENU_DRAW_GRAPH 21
+#define MENU_DRAW_TRANSITIVE_CLOSURE 22
+#define MENU_DRAW_NODE_MOVE 23
+#define MENU_DRAW_RENAME_NODE 24
+#define MENU_DRAW_DISPLAY_WEIGHT 25
+
+#define MENU_DISPLAY 3
+#define MENU_DISPLAY_MATRIX 31
+#define MENU_DISPLAY_EDGES 32
+#define MENU_DISPLAY_NODES 33
+#define MENU_DISPLAY_PREV_DICT 34
+#define MENU_DISPLAY_NEXT_DICT 35
+#define MENU_DISPLAY_MATRIX_POWER 36
+#define MENU_DISPLAY_TRANSITIVE_CLOSURE 37
+#define MENU_DISPLAY_FIND_PATH 38
+
+#define MENU_QUIT 5
+
+short menu_display();
+
+#endif 

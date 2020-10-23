@@ -14,14 +14,6 @@ void node_rename(node *p_node, char sz_name[5])
   strcpy(p_node->sz_name, sz_name);
 }
 
-void node_swap(node *node_a, node *node_b)
-{
-  node node_tmp;
-  node_tmp.coord = set_coord(node_a->coord.x, node_a->coord.y);
-  node_a->coord = set_coord(node_b->coord.x, node_b->coord.y);
-  node_b->coord = set_coord(node_tmp.coord.x, node_tmp.coord.y);
-}
-
 char set_level(matrix *p_matrix, node *v_node)
 {
   int i;

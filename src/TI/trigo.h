@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-#include "../point.h"
+#include "point.h"
 #include "../node.h"
 
 /**

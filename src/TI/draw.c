@@ -2,7 +2,7 @@
 
 void draw_arrow(point o_point_from, point o_point_to)
 {
-    arrow o_arrow = {.width = 5, .theta = 0.7};
+    arrow o_arrow = {.width = 6, .theta = 0.8};
     point aptPoly[3];
     float vecLine[2];
     float vecLeft[2];

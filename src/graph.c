@@ -4,8 +4,9 @@ void graph_init(graph *p_graph, matrix *p_matrix)
 {
   p_graph->i_nb_edge = matrix_count_edge(p_matrix);
   p_graph->i_nb_node = p_matrix->i_size;
+#ifdef __m68k__
   p_graph->i_ray = 10;
-
+#endif
   p_graph->v_node = calloc(p_matrix->i_size, sizeof(node));
   node_prefix(p_graph->v_node, (char *)"S", p_matrix->i_size);
 
@@ -14,13 +15,31 @@ void graph_init(graph *p_graph, matrix *p_matrix)
   set_level(p_matrix, p_graph->v_node);
 }
 
-void free_all(graph *p_graph, matrix *p_matrix)
+void set_edge(matrix *p_matrix, graph *p_graph)
 {
-  matrix_free(p_matrix);
+  int i, j, k = 0;
+
+  for (i = 0; i < p_matrix->i_size; i++)
+  {
+    for (j = 0; j < p_matrix->i_size; j++)
+    {
+      if (p_matrix->ppi_data[i][j] != 0)
+      {
+        p_graph->v_edge[k].i_weight = p_matrix->ppi_data[i][j];
+        p_graph->v_edge[k].src = p_graph->v_node + i;
+        p_graph->v_edge[k].dest = p_graph->v_node + j;
+        k++;
+      }
+    }
+  }
+}
+
+void graph_free(graph *p_graph)
+{
   free(p_graph->v_node);
   free(p_graph->v_edge);
 }
-/*
+
 void ford_bellman(graph *p_graph)
 {
   int i_start, i_end;
@@ -28,7 +47,6 @@ void ford_bellman(graph *p_graph)
   int i_tmp_valuation;
   char b_short_edge;
 
-  clrscr();
   printf("1 : shortest path\n2 : longest path\nchoice : ");
   scanf("%d", &i);
   if (i == 1)
@@ -91,17 +109,11 @@ void ford_bellman(graph *p_graph)
     if (abs(p_graph->v_node[i].i_value) == INT_MAX)
     {
       printf("No path between \n%s and %s\n", p_graph->v_node[i_start].sz_name, p_graph->v_node[i].sz_name);
-      ngetchx();
       return;
     }
     else
     {
       printf("Distance between \n%s and %s is: %d\n", p_graph->v_node[i_start].sz_name, p_graph->v_node[i].sz_name, p_graph->v_node[i].i_value);
-    }
-
-    if (i % 4 == 0)
-    {
-      ngetchx();
     }
   }
 
@@ -119,65 +131,4 @@ void ford_bellman(graph *p_graph)
     }
   } while (node_current != &p_graph->v_node[i_start]);
   printf("\n");
-}*/
-
-void set_edge(matrix *p_matrix, graph *p_graph)
-{
-  int i, j, k = 0;
-
-  for (i = 0; i < p_matrix->i_size; i++)
-  {
-    for (j = 0; j < p_matrix->i_size; j++)
-    {
-      if (p_matrix->ppi_data[i][j] != 0)
-      {
-        p_graph->v_edge[k].i_weight = p_matrix->ppi_data[i][j];
-        p_graph->v_edge[k].src = p_graph->v_node + i;
-        p_graph->v_edge[k].dest = p_graph->v_node + j;
-        k++;
-      }
-    }
-  }
 }
-/*
-void node_move(graph *p_graph)
-{
-  int iNumSommet;
-  point Tempcoord;
-  clrscr();
-
-  node_list(p_graph->v_node, p_graph->i_nb_node);
-
-  do
-  {
-    printf("move node  : ");
-    scanf("%d", &iNumSommet);
-    iNumSommet--;
-  } while (iNumSommet > p_graph->i_nb_node);
-
-  do
-  {
-    printf("coord x (max %d)\n", LCD_WIDTH - p_graph->i_ray);
-    scanf("%d", &Tempcoord.x);
-
-    if ((Tempcoord.x > LCD_WIDTH - p_graph->i_ray) || (Tempcoord.x < 0))
-    {
-      printf("\ncoord x overflow \n");
-    }
-
-  } while (Tempcoord.x > LCD_WIDTH);
-
-  do
-  {
-    printf("\ncoords y: (max: %d)\n", LCD_HEIGHT - p_graph->i_ray);
-    scanf("%d", &Tempcoord.y);
-
-    if ((Tempcoord.y > LCD_HEIGHT - p_graph->i_ray) || (Tempcoord.y < 0))
-    {
-      printf("\ncoord y overflow\n");
-    }
-
-  } while (Tempcoord.y > LCD_HEIGHT);
-  p_graph->v_node[iNumSommet].coord = set_coord(Tempcoord.x, Tempcoord.y);
-}
-*/

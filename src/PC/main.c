@@ -58,7 +58,8 @@ int main(int argc, char **argv)
 
   } while (i_choice > 0);
 
-  free_all(&o_graph, &o_matrix);
+  graph_free(&o_graph);
+  matrix_free(&o_matrix);
 
   return EXIT_SUCCESS;
 }

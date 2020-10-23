@@ -3,44 +3,274 @@
 #include <tigcclib.h>
 
 #include "../matrix.h"
-#include "../display.h"
-#include "io.h"
+#include "../print.h"
 #include "trigo.h"
 #include "draw.h"
-// #include "sprite.h"
+#include "menu.h"
+#include "point.h"
 
-short menu_display()
+ESI open_file()
 {
-    HANDLE menu = MenuNew(2, LCD_WIDTH, 18);
-    HANDLE menu_exec;
+    ESQ types[1] = {MATRIX_TAG};
+    HSym file;
+    SYM_ENTRY *SymPtr;
 
-    //ICON icon_cursor = {{0x40, 0x60, 0x70, 0x78, 0x7C, 0x7E, 0x7F, 0x7C, 0x4C, 0x0E, 0x06, 0x06}};
-    MenuAddText(menu, 0, "file", 1, 0);
-    MenuAddText(menu, 1, "load matrix", 11, 0);
+    file = VarOpen(types);
+    if (file.folder == 0)
+        exit(0);
+    else
+    {
+        SymPtr = DerefSym(file);
+        return HToESI(SymPtr->handle);
+    }
+}
 
-    MenuAddText(menu, 0, "draw", 2, 0);
-    MenuAddText(menu, 2, "draw graph", 21, 0);
-    MenuAddText(menu, 2, "transitive closure", 22, 0);
-    MenuAddText(menu, 2, "move node", 23, 0);
-    MenuAddText(menu, 2, "exchange nodes", 24, 0);
-    MenuAddText(menu, 2, "rename node", 25, 0);
-    MenuAddText(menu, 2, "display weight", 26, 0);
+void matrix_from_esi(matrix *p_matrix, ESI EsiPtr)
+{
+    int i, j = 0;
+    p_matrix->i_size = remaining_element_count(EsiPtr - 1);
+    matrix_malloc(p_matrix);
 
-    MenuAddText(menu, 0, "display", 3, 0);
-    MenuAddText(menu, 3, "matrix", 31, 0);
-    MenuAddText(menu, 3, "vertices", 32, 0);
-    MenuAddText(menu, 3, "nodes", 33, 0);
-    MenuAddText(menu, 3, "previous dictionary", 34, 0);
-    MenuAddText(menu, 3, "next dictionary", 35, 0);
-    MenuAddText(menu, 3, "matrix power", 36, 0);
-    MenuAddText(menu, 3, "transitive closure", 37, 0);
-    MenuAddText(menu, 3, "find path", 38, 0);
+    i = 0;
 
-    //MenuAddIcon(menu, 0, &icon_cursor, 4, 0);
-    MenuAddText(menu, -1, "quit", 5, 0);
+    if ((GetArgType(EsiPtr) != LIST_TAG) || (GetArgType(EsiPtr - 1) != LIST_TAG))
+        exit(0);
 
-    menu_exec = MenuBegin(HeapDeref(menu), 0, 0, 0);
-    return MenuKey(menu_exec, GKeyIn(NULL, 0));
+    EsiPtr--;
+    while (GetArgType(EsiPtr) != END_TAG)
+    {
+        EsiPtr--;
+        while (GetArgType(EsiPtr) != END_TAG)
+        {
+            p_matrix->ppi_data[i][j] = (GetArgType(EsiPtr) == INT_TAG) ? GetIntArg(EsiPtr) : (int)estack_number_to_Float(EsiPtr);
+            j++;
+            SkipArg(EsiPtr);
+        }
+        i++;
+        j = 0;
+        EsiPtr--; // END_TAG
+    }
+    EsiPtr--; // END_TAG
+}
+
+// TODO move in another source file for PC version
+void menu_matrix_closure(matrix *p_matrix)
+{
+    matrix MatriceTemp;
+
+    MatriceTemp.i_size = p_matrix->i_size;
+    matrix_malloc(&MatriceTemp);
+    matrix_copy(p_matrix, &MatriceTemp);
+
+    matrix_colsure(p_matrix, &MatriceTemp);
+    print_matrix(&MatriceTemp);
+
+    matrix_free(&MatriceTemp);
+    ngetchx();
+}
+
+// TODO move in another source file for PC version
+void menu_node_rename(node *v_node, int i_nb_node)
+{
+    short int i_choice;
+    int i;
+    char *sz_name = NULL;
+    clrscr();
+    printf("1: prefix all\n2: Rename one\n3: Rename all\n> ");
+    scanf("%hd", &i_choice);
+    if (i_choice == 1)
+    {
+        printf("\nNew prefix (< 5 char): \n");
+        scanf("%s", sz_name);
+        node_prefix(v_node, sz_name, i_nb_node);
+    }
+    else if (i_choice == 2)
+    {
+        print_node_list(v_node, i_nb_node);
+        printf("Which node rename ? \n");
+        scanf("%d", &i);
+        printf("\nNew name: \n");
+        scanf("%s", sz_name);
+        node_rename(&v_node[i - 1], sz_name);
+    }
+    else if (i_choice == 3)
+    {
+        for (i = 0; i < i_nb_node; i++)
+        {
+            strcpy(sz_name, "");
+            printf("\nN%d name : %s\new name : ", i + 1, v_node[i].sz_name);
+            scanf("%s", sz_name);
+            if (strcmp(sz_name, NULL))
+                node_rename(&v_node[i], sz_name);
+            else
+                printf("\n%s keep name\n", v_node[i].sz_name);
+        }
+    }
+}
+
+// TODO move in another source file for PC version
+void menu_pow(matrix *p_matrix)
+{
+    int ipower;
+    matrix MatriceTemp;
+    MatriceTemp.i_size = p_matrix->i_size;
+    matrix_malloc(&MatriceTemp);
+    matrix_copy(p_matrix, &MatriceTemp);
+
+    clrscr();
+    printf("power: ");
+    scanf("%d", &ipower);
+    matrix_pow(p_matrix, ipower, &MatriceTemp);
+    print_matrix(&MatriceTemp);
+    matrix_free(&MatriceTemp);
+}
+
+void draw_transitive_closure(matrix *p_matrix, graph *p_graph)
+{
+    matrix matrix_tmp;
+    graph graph_tmp;
+    int i;
+
+    matrix_tmp.i_size = p_matrix->i_size;
+    matrix_malloc(&matrix_tmp);
+    matrix_copy(p_matrix, &matrix_tmp);
+
+    matrix_colsure(p_matrix, &matrix_tmp);
+
+    graph_tmp.i_nb_edge = matrix_count_edge(&matrix_tmp);
+    graph_tmp.i_nb_node = matrix_tmp.i_size;
+    graph_tmp.i_ray = p_graph->i_ray;
+
+    graph_tmp.v_node = calloc(matrix_tmp.i_size, sizeof(node));
+    for (i = 0; i < matrix_tmp.i_size; i++)
+    {
+        strcpy(graph_tmp.v_node[i].sz_name, p_graph->v_node[i].sz_name);
+        graph_tmp.v_node[i].coord = set_coord(p_graph->v_node[i].coord.x, p_graph->v_node[i].coord.y);
+    }
+
+    graph_tmp.v_edge = malloc(matrix_count_edge(&matrix_tmp) * sizeof(edge));
+    set_edge(&matrix_tmp, &graph_tmp);
+    draw_graph(&graph_tmp);
+    ST_helpMsg("transitive closure drawing ");
+    ngetchx();
+    matrix_free(&matrix_tmp);
+    free(graph_tmp.v_node);
+    free(graph_tmp.v_edge);
+}
+
+void menu_node_move(graph *p_graph)
+{
+    int index_node = 0;
+    char abort = 0;
+    char done = 0;
+
+    clrscr();
+    draw_graph(p_graph);
+
+    // selection of the node to move
+    do
+    {
+        ST_helpMsg(p_graph->v_node[index_node].sz_name);
+        short key = ngetchx();
+
+        if (key == KEY_LEFT)
+        {
+            if (index_node > 0)
+            {
+                index_node--;
+            }
+        }
+
+        if (key == KEY_RIGHT)
+        {
+            if (index_node < p_graph->i_nb_node - 1)
+            {
+                index_node++;
+            }
+        }
+
+        if (_keytest(RR_ESC))
+        {
+            abort = 1;
+            done = 1;
+        }
+
+        if (_keytest(RR_ENTER))
+        {
+            done = 1;
+        }
+
+    } while (!done);
+
+    if (!abort)
+    {
+        // select coord
+        done = 0;
+        point o_coord = p_graph->v_node[index_node].coord;
+        const int crosshair_width = 2;
+        const int crosshair_height = 2;
+        const int move_px = 6;
+
+        do
+        {
+            // draw
+            clrscr();
+            draw_graph(p_graph);
+            DrawLine(o_coord.x - crosshair_width, o_coord.y, o_coord.x + crosshair_width, o_coord.y, A_NORMAL);
+            DrawLine(o_coord.x, o_coord.y - crosshair_height, o_coord.x, o_coord.y + crosshair_height, A_NORMAL);
+
+            // read key
+            short key = ngetchx();
+
+            if (key == KEY_LEFT)
+            {
+                if (o_coord.x > 0)
+                {
+                    o_coord.x -= move_px;
+                }
+            }
+
+            if (key == KEY_RIGHT)
+            {
+                if (o_coord.x < LCD_WIDTH)
+                {
+                    o_coord.x += move_px;
+                }
+            }
+
+            if (key == KEY_UP)
+            {
+                if (o_coord.y > 0)
+                {
+                    o_coord.y -= move_px;
+                }
+            }
+
+            if (key == KEY_DOWN)
+            {
+                if (o_coord.y < LCD_HEIGHT)
+                {
+                    o_coord.y += move_px;
+                }
+            }
+
+            if (_keytest(RR_ESC))
+            {
+                abort = 1;
+                done = 1;
+            }
+
+            if (_keytest(RR_ENTER))
+            {
+                done = 1;
+            }
+        } while (!done);
+
+        if (!abort)
+        {
+            p_graph->v_node[index_node].coord = set_coord(o_coord.x, o_coord.y);
+        }
+    }
 }
 
 void _main(void)
@@ -49,11 +279,8 @@ void _main(void)
     graph o_graph;
     matrix o_matrix;
 
-    //point v_key[8];
-
     ESI EsiPtr = top_estack;
     FontSetSys(F_6x8);
-    clrscr();
 
     // check if the argument point to a matrix
     if ((GetArgType(EsiPtr) != LIST_TAG) || (GetArgType(EsiPtr - 1) != LIST_TAG))
@@ -75,30 +302,18 @@ void _main(void)
     int index_node;
     for (index_node = 0; index_node < o_matrix.i_size; index_node++)
     {
-        o_graph.v_node[index_node].coord = set_coord(index_node * (LCD_WIDTH / o_matrix.i_size), index_node * (LCD_HEIGHT / o_matrix.i_size));
+        o_graph.v_node[index_node].coord = set_coord(index_node * (LCD_WIDTH / o_matrix.i_size),
+                                                     index_node * (LCD_HEIGHT / o_matrix.i_size));
     }
 
-    /*sprite cursor;
-    unsigned char sprite[12] = {
-        0x40, 0x60, 0x70, 0x78, 0x7C, 0x7E, 0x7F, 0x7C,
-        0x4C, 0x0E, 0x06, 0x06};
-
-    cursor.i_size = sizeof(sprite);
-    cursor.sz_bitmap = malloc(cursor.i_size * sizeof(cursor.sz_bitmap));
-    memcpy(cursor.sz_bitmap, sprite, cursor.i_size);
-    cursor.coord = set_coord(LCD_WIDTH / 2, LCD_HEIGHT / 2);
-    sprite_draw(cursor);
-
-    set_keyboard(v_key);
-    INT_HANDLER interrupt1 = GetIntVec(AUTO_INT_1); // save auto-interrupt 1 (bottom text)
-    */
+    clrscr();
 
     do
     {
         i_menu_choice = menu_display();
         switch (i_menu_choice)
         {
-        case 11:
+        case MENU_FILE_LOAD_MATRIX:
             EsiPtr = open_file();
             if (!is_square_matrix(EsiPtr))
             {
@@ -107,70 +322,75 @@ void _main(void)
             }
             else
             {
-                free_all(&o_graph, &o_matrix);
+                matrix_free(&o_matrix);
+                graph_free(&o_graph);
                 matrix_from_esi(&o_matrix, EsiPtr);
                 graph_init(&o_graph, &o_matrix);
             }
             break;
-        case 21:
+        case MENU_DRAW_GRAPH:
             draw_graph(&o_graph);
             ngetchx();
             break;
-        case 22:
-            //draw_transitive_closure(p_matrix, p_graph);
+        case MENU_DRAW_TRANSITIVE_CLOSURE:
+            draw_transitive_closure(&o_matrix, &o_graph);
             break;
-        case 23:
-            //node_move(p_graph);
+        case MENU_DRAW_NODE_MOVE:
+            menu_node_move(&o_graph);
+            draw_graph(&o_graph);
+            ngetchx();
             break;
-        case 25:
-            //menu_node_rename(p_graph->v_node, p_matrix->i_size);
+        case MENU_DRAW_RENAME_NODE:
+            menu_node_rename(o_graph.v_node, o_matrix.i_size);
             break;
-        case 26:
+        case MENU_DRAW_DISPLAY_WEIGHT:
             draw_graph(&o_graph);
             draw_edge_weight(o_graph.v_edge, o_graph.i_nb_edge);
             ngetchx();
             break;
-        case 31:
+        case MENU_DISPLAY_MATRIX:
             clrscr();
             print_matrix(&o_matrix);
             ngetchx();
             break;
-        case 32:
+        case MENU_DISPLAY_EDGES:
             clrscr();
             print_edge_list(o_graph.v_edge, matrix_count_edge(&o_matrix));
             ngetchx();
             break;
-        case 33:
+        case MENU_DISPLAY_NODES:
             clrscr();
             print_node_list(o_graph.v_node, o_matrix.i_size);
             ngetchx();
             break;
-        case 34:
+        case MENU_DISPLAY_PREV_DICT:
             clrscr();
             print_dict_prev(&o_graph);
             ngetchx();
             break;
-        case 35:
+        case MENU_DISPLAY_NEXT_DICT:
             clrscr();
             print_dict_next(&o_graph);
             ngetchx();
             break;
-        case 36:
-            //menu_pow(p_matrix);
+        case MENU_DISPLAY_MATRIX_POWER:
+            clrscr();
+            menu_pow(&o_matrix);
+            ngetchx();
             break;
-        case 37:
-            //menu_enclosure(p_matrix);
+        case MENU_DISPLAY_TRANSITIVE_CLOSURE:
+            clrscr();
+            menu_matrix_closure(&o_matrix);
+            ngetchx();
             break;
-        case 38:
-            //ford_bellman(p_graph);
-            break;
-        case 4: // cursor
-            //graph_draw(p_graph);
-            //sprite_focus(cursor, p_graph, v_key);
-            //SetIntVec(AUTO_INT_1, interrupt1);
+        case MENU_DISPLAY_FIND_PATH:
+            clrscr();
+            ford_bellman(&o_graph);
+            ngetchx();
             break;
         }
-    } while (i_menu_choice != 5);
+    } while (i_menu_choice != MENU_QUIT);
 
-    free_all(&o_graph, &o_matrix);
+    matrix_free(&o_matrix);
+    graph_free(&o_graph);
 }

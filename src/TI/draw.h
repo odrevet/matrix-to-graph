@@ -7,7 +7,7 @@
 #include <sprites.h>
 
 #include "../graph.h"
-#include "../point.h"
+#include "point.h"
 #include "trigo.h"
 
 /**

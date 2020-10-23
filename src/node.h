@@ -1,16 +1,14 @@
-/**
- @file  node.h
- @author DREVET Olivier 
- @brief 
-*/
-
 #ifndef NODE_H
 #define NODE_H
 
-//#include <tigcclib.h>
+#ifdef __m68k__
+#include <tigcclib.h>
+#endif
 #include <string.h>
 
-#include "point.h"
+#ifdef __m68k__
+#include "TI/point.h"
+#endif
 #include "matrix.h"
 
 /**
@@ -22,7 +20,9 @@
 */
 typedef struct
 {
-    point coord;   //TODO remove
+#ifdef __m68k__
+    point coord;
+#endif
     int i_level;
     int i_value;
     char sz_name[5];
@@ -38,14 +38,13 @@ void node_prefix(node *v_node, char szPrefix[5], int i_nb_node);
 
 void node_rename(node *p_node, char sz_name[5]);
 
-void node_swap(node *UnSommetA, node *UnSommetB);
-
 /**
  @brief Set the level of each  node 
  @param [in]The matrix where to check
  @param [in, out] The array of  node 
- @note The number of  node in the array is not required because it is calculated from the matrix size
- @return 1 if no error, or 0 otherwise (e.g. matrix have a loop)
+ @note The number of  node in the array is not required because it is calculated from the matrix size. 
+The given matrix must no have loop
+ @return 1 if no error, 0 otherwise
 */
 char set_level(matrix *p_matrix, node *v_node);
 
