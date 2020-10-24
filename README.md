@@ -5,6 +5,8 @@ Binary compiled with TIGCC http://tigcc.ticalc.org/
 
 The following documentation has been created using a TI-89 titanium, some instructions may vary depending on your TI model.
 
+![screenshot](/screenshots/graph.png?raw=true "Drawing of a graph on the TI89 Titanium")
+
 # Build
 
 ## For TI calculator
