@@ -59,20 +59,3 @@ Under the `HOME` app, type `mtograph()` or use the `var-link` menu then select m
 the matrix can be given as an argument, `mtograph(m)`, if no arguments are provided, mtograph start by displaying an open dialog to select a matrix. We will select the previously created matrix `m`.
 
 Using the cursor menu (F4) the nodes can be re-organized by placing the cursor above a node and pushing enter, then move the cursor to the desired location and pushing enter again.
-
-## Menu
-
-* F1 File
-  * Open
-* F2 Edit (pen icon)
-* F3 Display
-  * Display matrix: Display the loaded matrix
-  * Display edge: Display a list of all edges
-  * List  nodes: Display a list of all  nodes
-  * Prec dictionary: Display the dictionary of  nodes previous to one another
-  * Next dictionary: Display a dictionry of  nodes next to one another
-  * Matrix power: Given a number, will display each element at this power
-  * Transitive closure: Display the matrix with it's transitive closure
-  * edge search: Search a edge from one  node to another.
-* F4 Move (arrow icon): Display an arrow to move  nodes, this will affect the display only
-* F5 quit
