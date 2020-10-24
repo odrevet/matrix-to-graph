@@ -118,7 +118,7 @@ void ford_bellman(graph *p_graph)
   }
 
   node *node_current = &p_graph->v_node[i_end];
-  printf("\npath is: \n(%s", node_current->sz_name);
+  printf("\npath is: \n%s", node_current->sz_name);
   do
   {
     for (i = 0; i < p_graph->i_nb_edge; i++)

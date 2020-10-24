@@ -108,18 +108,16 @@ void menu_node_rename(node *v_node, int i_nb_node)
 
 void menu_pow(matrix *p_matrix)
 {
-    int ipower;
-    matrix MatriceTemp;
-    MatriceTemp.i_size = p_matrix->i_size;
-    matrix_malloc(&MatriceTemp);
-    matrix_copy(p_matrix, &MatriceTemp);
-
-    clrscr();
+    int i_power;
+    matrix matrix_tmp;
+    matrix_tmp.i_size = p_matrix->i_size;
+    matrix_malloc(&matrix_tmp);
+    matrix_copy(p_matrix, &matrix_tmp);
     printf("power: ");
-    scanf("%d", &ipower);
-    matrix_pow(p_matrix, ipower, &MatriceTemp);
-    print_matrix(&MatriceTemp);
-    matrix_free(&MatriceTemp);
+    scanf("%d", &i_power);
+    matrix_pow(p_matrix, i_power, &matrix_tmp);
+    print_matrix(&matrix_tmp);
+    matrix_free(&matrix_tmp);
 }
 
 void draw_transitive_closure(matrix *p_matrix, graph *p_graph)

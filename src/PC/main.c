@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     printf("2: print matrix\n");
     printf("3: dict prev\n");
     printf("4: dict next\n");
+    printf("5: find path\n");
     printf("Choice: \n");
     scanf("%d", &i_choice);
 
@@ -72,6 +73,9 @@ int main(int argc, char **argv)
       break;
     case 4:
       print_dict_next(&o_graph);
+      break;
+    case 5:
+      ford_bellman(&o_graph);
       break;
     }
 
