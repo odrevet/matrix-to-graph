@@ -12,7 +12,6 @@ short menu_display()
     MenuAddText(menu, MENU_DRAW, "draw graph", MENU_DRAW_GRAPH, 0);
     MenuAddText(menu, MENU_DRAW, "transitive closure", MENU_DRAW_TRANSITIVE_CLOSURE, 0);
     MenuAddText(menu, MENU_DRAW, "move node", MENU_DRAW_NODE_MOVE, 0);
-    MenuAddText(menu, MENU_DRAW, "move set coords", MENU_DRAW_NODE_SET_COORDS, 0);
     MenuAddText(menu, MENU_DRAW, "rename node", MENU_DRAW_RENAME_NODE, 0);
     MenuAddText(menu, MENU_DRAW, "display weight", MENU_DRAW_DISPLAY_WEIGHT, 0);
 

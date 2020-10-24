@@ -2,10 +2,15 @@
 #include "../matrix.h"
 #include "../print.h"
 
-void matrix_from_file(matrix *p_matrix, char *path)
+char matrix_from_file(matrix *p_matrix, char *path)
 {
-
   FILE *fp = fopen(path, "r");
+
+  if (!fp)
+  {
+    return 0;
+  }
+
   fscanf(fp, "%d", &p_matrix->i_size);
 
   matrix_malloc(p_matrix);
@@ -19,6 +24,7 @@ void matrix_from_file(matrix *p_matrix, char *path)
   }
 
   fclose(fp);
+  return 1;
 }
 
 int main(int argc, char **argv)
@@ -26,7 +32,20 @@ int main(int argc, char **argv)
   matrix o_matrix;
   graph o_graph;
 
-  matrix_from_file(&o_matrix, "test/m.txt"); // TODO from argv
+  printf("%d\n", argc);
+
+  if (argc <= 1)
+  {
+    printf("argument needed: path of the matrix file\n");
+    return EXIT_FAILURE;
+  }
+
+  if (!matrix_from_file(&o_matrix, argv[1]))
+  {
+    printf("Cannot load %s\n", argv[1]);
+    return EXIT_FAILURE;
+  }
+
   graph_init(&o_graph, &o_matrix);
 
   int i_choice;

@@ -7,12 +7,25 @@ The following documentation has been created using a TI-89 titanium, some instru
 
 # Build
 
+## For TI calculator
+
+* Install tigcc and export the TIGCC environement variable
 ```
 mkdir tigcc
 wget http://tigcc.ticalc.org/linux/tigcc_bin.tar.bz2
 tar -xjf tigcc_bin.tar.bz2 -C tigcc
 export TIGCC=~/tigcc
 ```
+
+The software can now be build with make
+
+  make 
+
+## For PC terminal
+
+A makefile is provided for PC build
+
+  make -f Makefile_PC
 
 # Usage
 
