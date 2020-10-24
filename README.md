@@ -21,13 +21,13 @@ export TIGCC=~/tigcc
 
 The software can now be build with make
 
-  make 
+    make 
 
-## For PC terminal
+## For PC
 
 A makefile is provided for PC build
 
-  make -f Makefile_PC
+    make -f Makefile_PC
 
 # Usage
 
