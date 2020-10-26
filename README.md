@@ -58,4 +58,4 @@ Under the `HOME` app, type `mtograph()` or use the `var-link` menu then select m
 
 the matrix can be given as an argument, `mtograph(m)`, if no arguments are provided, mtograph start by displaying an open dialog to select a matrix. We will select the previously created matrix `m`.
 
-Using the cursor menu (F4) the nodes can be re-organized by placing the cursor above a node and pushing enter, then move the cursor to the desired location and pushing enter again.
+The nodes can be re-organized interactivly with the 'move node' menu
